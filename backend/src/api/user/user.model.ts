@@ -1,12 +1,17 @@
 import { model, Schema } from "mongoose";
 import { User } from "./user.entity";
+import { UserRole } from "../utils/enum/user.role";
 
 const userSchema = new Schema<User>({
     firstName: { type: String },
     lastName: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String },
-    role: { type: String, default: 'player' },
+    role: { 
+        type: String,
+        enum: Object.values(UserRole),  
+        default: UserRole.PLAYER,
+    },
     active: { type: Boolean, default: false },
     verificationToken: { type: String },
     verificationTokenExpires: { type: Date },
