@@ -11,6 +11,7 @@ const userSchema = new Schema<User>({
         enum: Object.values(UserRole),  
         default: UserRole.PLAYER,
     },
+    elo: { type: Number, default: 0 },
     active: { type: Boolean, default: false },
     verificationToken: { type: String },
     verificationTokenExpires: { type: Date },

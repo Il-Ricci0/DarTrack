@@ -6,6 +6,7 @@ export type User = {
     email: string;
     password: string;
     role: UserRole;
+    elo: number;
     active: boolean;
     verificationToken?: string;
     verificationTokenExpires?: Date;
