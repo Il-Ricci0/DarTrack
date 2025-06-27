@@ -24,9 +24,6 @@
         },
         "@schematics/angular:guard": {
           "skipTests": true
-        },
-        "@schematics/angular:interface": {
-          "skipTests": true
         }
       }, 
       "root": "",
