@@ -1,0 +1,78 @@
+import { UserIdentityModel } from "../../lib/auth/local/user-identity.model";
+import { UserRole } from "../utils/enum/user.role";
+import { User } from "./user.entity";
+import { UserModel } from "./user.model";
+import * as bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
+const JWT_EMAIL_SECRET = process.env.JWT_EMAIL_SECRET || 'my_email_verification_secret';
+
+export class UserExistsError extends Error {
+    constructor() {
+        super();
+        this.name = 'UserExists';
+        this.message = 'Username già in uso.';
+    }
+}
+
+export class EmailExistsError extends Error {
+    constructor() {
+        super();
+        this.name = 'EmailExists';
+        this.message = 'Email già in uso.';
+    }
+}
+
+export class MissingCredentialsError extends Error {
+    constructor() {
+        super();
+        this.name = 'MissingCredentials';
+        this.message = 'Username e Password sono obbligatori.';
+    }
+}
+
+export class UserService {
+    async add(user: Omit<User, 'role'>, credentials: { username: string, password: string }): Promise<User> {
+        if (!credentials.username || !credentials.password) {
+            throw new MissingCredentialsError();
+        }
+
+        const existingIdentity = await UserIdentityModel.findOne({ 'credentials.username': credentials.username });
+        if (existingIdentity) {
+            throw new UserExistsError();
+        }
+
+        const existingEmail = await UserModel.findOne({ email: user.email });
+        if (existingEmail) {
+            throw new EmailExistsError();
+        }
+
+        const newUser = await UserModel.create(user);
+
+        const verificationToken = jwt.sign({ userId: newUser.id, email: newUser.email }, JWT_EMAIL_SECRET, { expiresIn: '1d' });
+
+        newUser.verificationTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+        newUser.verificationToken = verificationToken;
+        await newUser.save();
+
+        const hashedPassword = await bcrypt.hash(credentials.password, 10);
+
+        await UserIdentityModel.create({
+            provider: 'local',
+            user: newUser.id,
+            credentials: {
+                username: credentials.username,
+                hashedPassword
+            }
+        });
+        return newUser;
+    }
+
+    async getById(userId: string): Promise<User | null> {
+        const user = await UserModel.findById(userId);
+        return user ? user.toObject(): null;
+    }
+}
+
+export default new UserService;
