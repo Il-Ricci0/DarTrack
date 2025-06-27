@@ -3,8 +3,7 @@ import { User } from "../user.model";
 export class UserFactory {
 
     public fromJson = (json: any): User => ({
-        firstName: json?.firstName,
-        lastName: json?.lastName,
+        username: json?.username,
         email: json?.email,
         role: json?.role,
         active: json?.active,
@@ -13,8 +12,7 @@ export class UserFactory {
     }); 
 
     public toJson = (user: User): any => ({
-        firstName: user.firstName,
-        lastName: user.lastName,
+        username: user.username,
         email: user.email,
         role: user.role,
         active: user.active,

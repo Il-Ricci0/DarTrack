@@ -1,8 +1,7 @@
 import { EUserRole } from "./enums/user.enum";
 
 export class User {
-    firstName!: string | null;
-    lastName!: string | null;
+    username!: string | null;
     email!: string | null;
     role!: EUserRole | null;
     active!: boolean | null;
