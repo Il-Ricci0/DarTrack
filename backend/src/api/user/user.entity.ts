@@ -2,8 +2,7 @@ import { UserRole } from '../utils/enum/user.role';
 
 export type User = {
     id?: string;
-    firstName: string;
-    lastName: string;
+    username: string;
     email: string;
     password: string;
     role: UserRole;

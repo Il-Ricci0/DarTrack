@@ -3,8 +3,7 @@ import { User } from "./user.entity";
 import { UserRole } from "../utils/enum/user.role";
 
 const userSchema = new Schema<User>({
-    firstName: { type: String },
-    lastName: { type: String },
+    username: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String },
     role: { 
