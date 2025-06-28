@@ -15,4 +15,8 @@ export class TopnavComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         this.ready$.set(true);
     }
+
+    toggleMenu() {
+        this.showMenu$.update(x => !x);
+    }
 }

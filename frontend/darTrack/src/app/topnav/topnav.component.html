@@ -1,7 +1,7 @@
 <header>
     <div class="content">
         <div class="left">
-            <button type="button" class="btn btn-primary menu-button" (click)="showMenu$.set(true)">
+            <button type="button" class="btn btn-primary menu-button" (click)="toggleMenu()">
                 <i class="fa-solid fa-bars menu-icon"></i>
             </button>
         </div>
@@ -13,7 +13,17 @@
     <hr class="fading-hr">
 </header>
 
-@if(ready$() && showMenu$()) {
-<div class="menu-panel">
+@if(ready$()) {
+<div class="menu-panel" [class.transparent]="!showMenu$()">
+    <div class="panel-content">
+
+        <avatar-selector [selected]="1"/>
+
+        <button type="button" class="btn btn-primary">CURRENT TOURNAMENT</button>
+
+        <button type="button" class="btn btn-primary">TOURNAMENT HISTORY</button>
+
+        <button type="button" class="btn btn-primary">LEADERBOARD</button>
+    </div>
 </div>
 }
