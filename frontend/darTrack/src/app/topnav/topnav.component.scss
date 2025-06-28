@@ -10,14 +10,38 @@ header {
     display: flex;
     flex-direction: column;
     padding-top: 1rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    $p-x: 3rem;
+    padding-left: $p-x;
+    padding-right: $p-x;
+
+    .content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: palette.$c-dark-contrast;
+
+        .left {
+            display: flex;
+            align-items: center;
+            .menu-icon {
+                font-size: 25px;
+            }
+        }
+
+        .center {
+
+        }
+
+        .right {
+
+        }
+    }
 
     .fading-hr {
         border: none;
         width: 100%;
-        height: 2px;
-        background: linear-gradient(to right, transparent, palette.$c-input-border, transparent);
+        height: 1px;
+        background: linear-gradient(to right, transparent, palette.$c-dark-contrast, transparent);
         margin-top: 1rem;
     }
 }
