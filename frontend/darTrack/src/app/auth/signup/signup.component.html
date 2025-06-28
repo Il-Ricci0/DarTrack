@@ -1,0 +1,20 @@
+<div class="auth-container">
+    <form class="auth-form">
+
+        <h1>Sign up</h1>
+
+        <avatar-selector [selected]="random"/>
+
+        <input type="text" name="username" placeholder="Username" autocomplete="off">
+
+        <input type="email" name="email" placeholder="Email" autocomplete="off">
+
+        <input type="password" name="password" placeholder="Password" autocomplete="new-password">
+
+        <input type="password" name="password1" placeholder="Retype password" autocomplete="new-password">
+
+        <button type="button" class="btn btn-primary">SIGN UP</button>
+
+        <span class="redirect-text">Have an account? <a [routerLink]="['/', 'auth','signin']">SIGN IN</a></span>
+    </form>
+</div>

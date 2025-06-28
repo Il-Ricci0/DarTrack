@@ -1,0 +1,57 @@
+@use '../../styles/palette';
+
+:host {
+    display: flex;
+}
+
+header {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    $p-x: 3rem;
+    padding-left: $p-x;
+    padding-right: $p-x;
+
+    .content {
+        min-height: 80px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        color: palette.$c-dark-contrast;
+        position: relative;
+
+        .left {
+            display: flex;
+            align-items: center;
+
+            .menu-button {
+                padding: 0 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .menu-icon {
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .right {}
+    }
+
+    .fading-hr {
+        border: none;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(to right, transparent, palette.$c-dark-contrast, transparent);
+        margin-top: 1rem;
+    }
+}

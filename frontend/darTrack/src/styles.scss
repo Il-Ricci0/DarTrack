@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+@forward 'styles/main';
+@forward 'styles/typography';
+@forward 'styles/palette';
+@forward 'styles/auth';
+@forward 'styles/input';
+@forward 'styles/button';
+@forward 'styles/layout';

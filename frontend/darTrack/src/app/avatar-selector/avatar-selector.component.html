@@ -1,0 +1,23 @@
+<div class="avatar">
+    <div class="avatar-selector" (click)="selecting$.set(!readonly())">
+        <img src="avatars/avatar_{{selected$()}}.png" alt="your avatar">
+    </div>
+</div>
+
+@if(ready$() && !readonly()) {
+<div class="avatar-select-panel" [class.transparent]="!selecting$()">
+    <div class="avatar-select-content">
+        <h1>Select your avatar</h1>
+        <div class="avatar-select-container">
+            @for(index of [1,2,3,4,5,6]; track index) {
+            <div class="avatar-selector-container">
+                <div class="avatar-selector" [class.selected]="selected$() === index" (click)="selected$.set(index)">
+                    <img src="avatars/avatar_{{index}}.png" alt="avatar {{index}}">
+                </div>
+            </div>
+            }
+        </div>
+        <button type="button" class="btn btn-primary" (click)="selecting$.set(false)">CLOSE :3</button>
+    </div>
+</div>
+}
