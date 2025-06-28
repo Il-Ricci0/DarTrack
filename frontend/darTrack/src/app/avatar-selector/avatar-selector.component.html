@@ -4,6 +4,7 @@
     </div>
 </div>
 
+@if(ready$()) {
 <div class="avatar-select-panel" [class.transparent]="!selecting$()">
     <h1>Select your avatar</h1>
     <div class="avatar-select-container">
@@ -15,5 +16,6 @@
         </div>
         }
     </div>
-    <button type="button" class="btn btn-primary" (click)="selecting$.set(false)">CLOSE</button>
+    <button type="button" class="btn btn-primary" (click)="selecting$.set(false)">CLOSE :3</button>
 </div>
+}
