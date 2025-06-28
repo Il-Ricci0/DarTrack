@@ -1,0 +1,18 @@
+<div class="auth-container">
+    <form class="auth-form">
+
+        <h1>Sign up</h1>
+
+        <input type="text" name="username" placeholder="Username">
+
+        <input type="email" name="email" placeholder="Email">
+
+        <input type="password" name="password" placeholder="Password">
+
+        <input type="password" name="password1" placeholder="Retype password">
+
+        <button type="button" class="btn btn-primary">SIGN UP</button>
+
+        <span class="redirect-text">Have an account? <a [routerLink]="['/', 'auth','signin']">SIGN IN</a></span>
+    </form>
+</div>
