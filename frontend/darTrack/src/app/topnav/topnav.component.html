@@ -17,7 +17,7 @@
 <div class="menu-panel" [class.transparent]="!showMenu$()">
     <div class="panel-content">
 
-        <avatar-selector [selected]="1"/>
+        <avatar-selector [selected]="authService.user$()?.avatarId"/>
 
         <button type="button" class="btn btn-primary">CURRENT TOURNAMENT</button>
 

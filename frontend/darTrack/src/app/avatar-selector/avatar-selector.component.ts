@@ -7,7 +7,7 @@ import { AfterViewInit, Component, effect, input, model, signal } from "@angular
 })
 export class AvatarSelectorComponent implements AfterViewInit {
 
-    selected = model<number>();
+    selected = model<number | null>();
     selected$ = signal<number | null>(null);
     selecting$ = signal(false);
     ready$ = signal(false);

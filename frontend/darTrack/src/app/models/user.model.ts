@@ -5,6 +5,7 @@ export class User {
     email!: string | null;
     role!: EUserRole | null;
     active!: boolean | null;
+    avatarId!: number | null;
     verificationToken!: string | null;
     verificationTokenExpires!: Date | null;
 }
