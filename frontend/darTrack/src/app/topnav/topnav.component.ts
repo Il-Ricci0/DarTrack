@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { AfterViewInit, Component, signal } from "@angular/core";
 import { AvatarSelectorComponent } from "../avatar-selector/avatar-selector.component";
 
 @Component({
@@ -7,5 +7,12 @@ import { AvatarSelectorComponent } from "../avatar-selector/avatar-selector.comp
     styleUrl: 'topnav.component.scss',
     imports: [AvatarSelectorComponent]
 })
-export class TopnavComponent {
+export class TopnavComponent implements AfterViewInit {
+
+    showMenu$ = signal(false);
+    ready$ = signal(false);
+
+    ngAfterViewInit(): void {
+        this.ready$.set(true);
+    }
 }

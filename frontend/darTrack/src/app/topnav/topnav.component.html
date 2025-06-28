@@ -1,7 +1,9 @@
 <header>
     <div class="content">
         <div class="left">
-            <i class="fa-solid fa-bars menu-icon"></i>
+            <button type="button" class="btn btn-primary menu-button" (click)="showMenu$.set(true)">
+                <i class="fa-solid fa-bars menu-icon"></i>
+            </button>
         </div>
         <div class="center">
             <avatar-selector [selected]="1" [readonly]="true" />
@@ -10,3 +12,8 @@
     </div>
     <hr class="fading-hr">
 </header>
+
+@if(ready$() && showMenu$()) {
+<div class="menu-panel">
+</div>
+}
