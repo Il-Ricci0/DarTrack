@@ -8,4 +8,7 @@ import { AvatarSelectorComponent } from "../../avatar-selector/avatar-selector.c
     imports: [RouterLink, AvatarSelectorComponent]
 })
 export class SignupComponent {
+
+    random: number = Math.floor(Math.random() * 5) + 1;
+
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, signal } from "@angular/core";
+import { AfterViewInit, Component, effect, input, model, signal } from "@angular/core";
 
 @Component({
     templateUrl: 'avatar-selector.component.html',
@@ -7,9 +7,40 @@ import { AfterViewInit, Component, signal } from "@angular/core";
 })
 export class AvatarSelectorComponent implements AfterViewInit {
 
-    selected$ = signal(Math.floor(Math.random() * 6) + 1);
+    selected = model<number>();
+    selected$ = signal<number | null>(null);
     selecting$ = signal(false);
     ready$ = signal(false);
+    
+    readonly = input(false);
+
+    private syncing = false;
+
+    constructor() {
+        effect(() => {
+            if (this.syncing)
+                return;
+
+            const selected = this.selected();
+            if (selected != null && selected !== this.selected$()) {
+                this.syncing = true;
+                this.selected$.set(selected);
+                queueMicrotask(() => (this.syncing = false));
+            }
+        });
+
+        effect(() => {
+            if (this.syncing)
+                return;
+
+            const selected = this.selected$();
+            if (selected != null && selected !== this.selected()) {
+                this.syncing = true;
+                this.selected.set(selected);
+                queueMicrotask(() => (this.syncing = false));
+            }
+        });
+    }
 
     ngAfterViewInit(): void {
         this.ready$.set(true);
