@@ -1,3 +1,4 @@
+@if(topnavService.renderHeader$()) {
 <header>
     <div class="content">
         <div class="left">
@@ -12,12 +13,14 @@
     </div>
     <hr class="fading-hr">
 </header>
+}
+
 
 @if(ready$()) {
 <div class="menu-panel" [class.transparent]="!showMenu$()">
     <div class="panel-content">
 
-        <avatar-selector [selected]="authService.user$()?.avatarId"/>
+        <avatar-selector [selected]="authService.user$()?.avatarId" />
 
         <button type="button" class="btn btn-primary">CURRENT TOURNAMENT</button>
 

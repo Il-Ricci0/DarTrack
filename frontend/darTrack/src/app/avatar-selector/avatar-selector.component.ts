@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, effect, input, model, signal } from "@angular/core";
+import { AfterViewInit, Component, effect, inject, input, model, signal } from "@angular/core";
+import { TopnavService } from "../services/topnav.service";
 
 @Component({
     templateUrl: 'avatar-selector.component.html',
@@ -7,16 +8,23 @@ import { AfterViewInit, Component, effect, input, model, signal } from "@angular
 })
 export class AvatarSelectorComponent implements AfterViewInit {
 
+    readonly = input(false);
     selected = model<number | null>();
     selected$ = signal<number | null>(null);
     selecting$ = signal(false);
     ready$ = signal(false);
-    
-    readonly = input(false);
 
     private syncing = false;
 
+    topnavService = inject(TopnavService);
+
     constructor() {
+
+        effect(() => {
+            const selecting = this.selecting$();
+            this.topnavService.renderHeader$.set(!selecting);
+        });
+
         effect(() => {
             if (this.syncing)
                 return;
