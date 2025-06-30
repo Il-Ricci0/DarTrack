@@ -10,8 +10,8 @@
     </div>
 
     <div class="game-type-container" [class.transparent]="gameContainerStatus$() !== EGameContainerStatus.Casual">
-        <button type="button" class="btn btn-casual" routerLink="/game/join">JOIN</button>
-        <button type="button" class="btn btn-casual" routerLink="/game/create">CREATE</button>
+        <button type="button" class="btn btn-casual" routerLink="/game/casual/join">JOIN</button>
+        <button type="button" class="btn btn-casual" routerLink="/game/casual/create">CREATE</button>
     </div>
 
     <div class="game-mode-container" (click)="onTournamentClick()">
@@ -25,7 +25,7 @@
     </div>
 
     <div class="game-type-container" [class.transparent]="gameContainerStatus$() !== EGameContainerStatus.Tournament">
-        <button type="button" class="btn btn-tournament" routerLink="/game/join">JOIN</button>
-        <button type="button" class="btn btn-tournament" routerLink="/game/create">CREATE</button>
+        <button type="button" class="btn btn-tournament" routerLink="/game/tournament/join">JOIN</button>
+        <button type="button" class="btn btn-tournament" routerLink="/game/tournament/create">CREATE</button>
     </div>
 </div>

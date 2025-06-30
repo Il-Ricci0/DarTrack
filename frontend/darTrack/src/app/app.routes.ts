@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { CoreComponent } from './core/core.component';
 import { authRoutes } from './auth/auth.routes';
-import { CreateMatch } from './create-match/create-match';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { matchRoutes } from './match/match.routes';
 
 export const routes: Routes = [
   {
@@ -14,10 +14,7 @@ export const routes: Routes = [
     path: '',
     component: CoreComponent,
     children: [
-      {
-        path: 'game/create',
-        component: CreateMatch,
-      },
+      ...matchRoutes,
       {
         path: 'dashboard',
         component: DashboardComponent
