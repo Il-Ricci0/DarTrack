@@ -1,7 +1,7 @@
 export enum EElo {
 
     // =^.^=
-    PlasticI,
+    Plastic,
 
     IronIV,
     IronIII,
