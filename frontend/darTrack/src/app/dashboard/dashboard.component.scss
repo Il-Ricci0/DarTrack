@@ -45,20 +45,50 @@
             font-size: 90px;
 
             &.casual {
+                animation: dance-casual 1.5s ease-in-out infinite;
+                animation-delay: 0s;
                 color: palette.$c-casual;
                 position: absolute;
                 right: -30px;
                 bottom: -30px;
-                transform: rotate(-20deg);
             }
 
             &.tournament {
-                color:palette.$c-tournament;
+                animation: dance-tournament 1.5s ease-in-out infinite;
+                animation-delay: .25s;
+                color: palette.$c-tournament;
                 right: -30px;
-                transform: rotate(20deg);
                 position: absolute;
             }
         }
     }
 
+}
+
+@keyframes dance-casual {
+    0% {
+        transform: rotate(-20deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(-20deg) translateY(10px);
+    }
+
+    100% {
+        transform: rotate(-20deg) translateY(0);
+    }
+}
+
+@keyframes dance-tournament {
+    0% {
+        transform: rotate(20deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(20deg) translateY(10px);
+    }
+
+    100% {
+        transform: rotate(20deg) translateY(0);
+    }
 }
