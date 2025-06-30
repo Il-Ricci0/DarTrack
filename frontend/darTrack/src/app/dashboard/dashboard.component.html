@@ -1,5 +1,5 @@
 <div class="dashboard">
-    <div class="game-mode-container">
+    <div class="game-mode-container" (click)="onCasualClick()">
         <div class="left-side">
             <span class="game-mode-title">Casual</span>
             <span class="game-mode-description">Improve your dart skills while chilling with your friends</span>
@@ -9,7 +9,12 @@
         </div>
     </div>
 
-    <div class="game-mode-container">
+    <div class="game-type-container" [class.transparent]="gameContainerStatus$() !== EGameContainerStatus.Casual">
+        <button type="button" class="btn btn-primary" routerLink="/game/join">JOIN</button>
+        <button type="button" class="btn btn-primary" routerLink="/game/create">CREATE</button>
+    </div>
+
+    <div class="game-mode-container" (click)="onTournamentClick()">
         <div class="left-side">
             <span class="game-mode-title">Tournament</span>
             <span class="game-mode-description">Keep up the competition with elo ranking</span>
@@ -17,5 +22,10 @@
         <div class="right-side">
             <i class="game-mode-icon tournament fa-solid fa-ranking-star"></i>
         </div>
+    </div>
+
+    <div class="game-type-container" [class.transparent]="gameContainerStatus$() !== EGameContainerStatus.Tournament">
+        <button type="button" class="btn btn-primary" routerLink="/game/join">JOIN</button>
+        <button type="button" class="btn btn-primary" routerLink="/game/create">CREATE</button>
     </div>
 </div>

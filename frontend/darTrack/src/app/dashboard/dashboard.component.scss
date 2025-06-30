@@ -7,6 +7,27 @@
     flex-direction: column;
 }
 
+.game-type-container {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+
+  &.transparent {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.95);
+  }
+}
+
 .game-mode-container {
     margin: 1rem;
     border: 2px solid palette.$c-input-border;
@@ -45,6 +66,7 @@
             font-size: 90px;
 
             &.casual {
+                transform: rotate(-20deg);
                 animation: dance-casual 1.5s ease-in-out infinite;
                 animation-delay: 0s;
                 color: palette.$c-casual;
@@ -54,6 +76,7 @@
             }
 
             &.tournament {
+                transform: rotate(20deg);
                 animation: dance-tournament 1.5s ease-in-out infinite;
                 animation-delay: .25s;
                 color: palette.$c-tournament;
