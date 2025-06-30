@@ -7,7 +7,7 @@
             </button>
         </div>
         <div class="center">
-            <avatar-selector [selected]="1" [readonly]="true" />
+            <avatar-selector [selected]="authService.user$()?.avatarId" [readonly]="true" />
         </div>
         <div class="right"></div>
     </div>
