@@ -5,17 +5,30 @@
     border-radius: 16px;
     height: 46px;
     font-weight: 700;
-    box-shadow: 0 4px 0 palette.$c-primary-darker;
     margin: 0;
     width: 100%;
-
-    &:active {
-        transform: translateY(4px);
-        box-shadow: none;
-    }
 
     &.btn-primary {
         background: palette.$c-primary;
         color: palette.$c-text-primary;
+        box-shadow: 0 4px 0 palette.$c-primary-darker;
+    }
+
+    &.btn-casual {
+        background: palette.$c-casual;
+        color: palette.$c-text-casual;
+        box-shadow: 0 4px 0 palette.$c-casual-darker;
+    }
+
+    &.btn-tournament {
+        background: palette.$c-tournament;
+        color: palette.$c-text-tournament;
+        box-shadow: 0 4px 0 palette.$c-tournament-darker;
+
+    }
+
+    &:active {
+        transform: translateY(2px);
+        box-shadow: none;
     }
 }
