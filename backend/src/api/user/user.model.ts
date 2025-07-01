@@ -16,7 +16,7 @@ const userSchema = new Schema<User>({
     rank: { 
         type: String,
         enum: Object.values(UserRank),
-        default: undefined },
+        default: UserRank.UnRanked },
     active: { type: Boolean, default: false },
     verificationToken: { type: String },
     verificationTokenExpires: { type: Date },
