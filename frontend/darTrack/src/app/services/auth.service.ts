@@ -15,10 +15,7 @@ export class AuthService {
 
     httpClient = inject(HttpClient);
 
-    user$ = signal<User | null>(UserFactory.fromJson({
-        username: 'sissiogamer89',
-        avatarId: 1
-    }));
+    user$ = signal<User | null>(null);
 
     storeAccessToken = (accessToken: string) =>
         localStorage.setItem(this.ACCESS_TOKEN_KEY, accessToken)
