@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { UserIdentityModel } from "./user-identity.model";
 import bcrypt from 'bcrypt';
+import { UserModel } from "../../../api/user/user.model";
 
 passport.use(
     new LocalStrategy(
@@ -12,24 +13,36 @@ passport.use(
         },
         async (username, IsStrongPassword, done) => {
             try {
-                const identity = await UserIdentityModel.findOne({ 'credentials.username': username });
+                const identity = await UserIdentityModel.findOne({ 'credentials.username': username }).populate('user');
                 if (!identity) {
-                    done(null, false, { message: `username ${username} not found` });
+                    done(null, false, { message: `Username ${username} not found.` });
                     return;
                 }
 
                 const match = await bcrypt.compare(IsStrongPassword, identity.credentials.hashedPassword);
 
-                if (match) {
-                    if (!identity.user.active) {
-                        done(null, false, { message: 'Account non verificato. Controlla la tua email.' });
+                if (!match) {
+                    done(null, false, { message: 'Invalid password.' });
+                    return;
+                }
+
+                if (!identity.user.active) {
+                    // Controlla prima se il token di verifica è scaduto
+                    if (!identity.user.verificationTokenExpires || identity.user.verificationTokenExpires < new Date()) {
+                        // Elimina utente da entrambe le collection
+                        await UserIdentityModel.deleteOne({ user: identity.user.id });
+                        await UserModel.deleteOne({ _id: identity.user.id });
+
+                        done(null, false, { message: 'Verification token expired. Your registration has been deleted. Please register again.' });
                         return;
                     }
 
-                    done(null, identity.toObject().user);
+                    // Se non è scaduto ma non è attivo, blocca accesso
+                    done(null, false, { message: 'Account not verified. Please check your email.' });
                     return;
                 }
-                done(null, false, { message: 'Password non valida.' })
+
+                done(null, identity.toObject().user);
             } catch (err) {
                 done(err);
             }

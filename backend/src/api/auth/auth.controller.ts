@@ -9,6 +9,8 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from "../../lib/auth/jwt/jwt-strategy";
 import { User } from "../user/user.entity";
 import { sendVerificationEmail } from "../email-verification/verify.service";
+import { UserIdentityModel } from "../../lib/auth/local/user-identity.model";
+import { UserModel } from "../user/user.model";
 
 export const register = async (
     req: TypedRequest<AddUserDTO>,
@@ -57,18 +59,37 @@ export const login = async (
                     return;
                 }
 
+                if (!user.active) {
+                    if (!user.verificationTokenExpires || user.verificationTokenExpires < new Date()) {
+                        await UserModel.deleteOne({ _id: user._id });
+                        await UserIdentityModel.deleteOne({ user: user._id });
+
+                        res.status(401).json({
+                            error: 'VerificationExpired',
+                            message: 'Verification token expired. Your registration has been deleted. Please register again.'
+                        });
+                        return;
+                    }
+
+                    res.status(401).json({
+                        error: 'NotVerified',
+                        message: 'Please verify your email before logging in.'
+                    });
+                    return;
+                }
+
                 const { token, refreshToken } = await tokenSrv.generateTokenPair(user.id);
 
-                res.status(200).json({ 
+                res.status(200).json({
                     user,
                     token,
                     refreshToken
-                 });
+                });
             } catch (err) {
                 next(err);
             }
         }
-    ) (req, res, next);
+    )(req, res, next);
 }
 
 export const refresh = async (
@@ -89,7 +110,7 @@ export const refresh = async (
             });
             return;
         }
-        
+
         const match = await tokenSrv.verifyMatch(payload.id!, refreshToken);
         if (!match) {
             console.log('unset');
