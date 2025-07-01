@@ -3,19 +3,33 @@ export enum UserRank {
 
     Plastic = "Plastic",
 
-    Iron = "Iron",
+    IronIII = "IronIII",
+    IronII = "IronII",
+    IronI = "IronI",
 
-    Bronze = "Bronze",
+    BronzeIII = "BronzeIII",
+    BronzeII = "BronzeII",
+    BronzeI = "BronzeI",
 
-    Silver = "Silver",
+    SilverIII = "SilverIII",
+    SilverII = "SilverII",
+    SilverI = "SilverI",
 
-    Gold = "Gold",
+    GoldIII = "GoldIII",
+    GoldII = "GoldII",
+    GoldI = "GoldI",
 
-    Platinum = "Platinum",
+    PlatinumIII = "PlatinumIII",
+    PlatinumII = "PlatinumII",
+    PlatinumI = "PlatinumI",
 
-    Emerald = "Emerald",
+    EmeraldIII = "EmeraldIII",
+    EmeraldII = "EmeraldII",
+    EmeraldI = "EmeraldI",
 
-    Diamond = "Diamond",
+    DiamondIII = "DiamondIII",
+    DiamondII = "DiamondII",
+    DiamondI = "DiamondI",
 
     Master = "Master",
     GrandMaster = "GrandMaster",
