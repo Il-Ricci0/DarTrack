@@ -8,12 +8,10 @@ import passport from "passport";
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from "../../lib/auth/jwt/jwt-strategy";
 import { User } from "../user/user.entity";
-import dotenv from 'dotenv';
 import { sendVerificationEmail } from "../email-verification/verify.service";
-import { token } from "morgan";
 
 export const register = async (
-    req: Request,
+    req: TypedRequest<AddUserDTO>,
     res: Response,
     next: NextFunction
 ) => {
