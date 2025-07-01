@@ -3,17 +3,17 @@
 
         <h1>Sign up</h1>
 
-        <avatar-selector [selected]="random"/>
+        <avatar-selector [(selected)]="signup.avatarId"/>
 
-        <input type="text" name="username" placeholder="Username" autocomplete="off">
+        <input type="text" name="username" placeholder="Username" autocomplete="off" [(ngModel)]="signup.username">
 
-        <input type="email" name="email" placeholder="Email" autocomplete="off">
+        <input type="email" name="email" placeholder="Email" autocomplete="off" [(ngModel)]="signup.email">
 
-        <input type="password" name="password" placeholder="Password" autocomplete="new-password">
+        <input type="password" name="password" placeholder="Password" autocomplete="new-password" [(ngModel)]="signup.password">
 
-        <input type="password" name="password1" placeholder="Retype password" autocomplete="new-password">
+        <input type="password" name="password1" placeholder="Retype password" autocomplete="new-password" [(ngModel)]="password1">
 
-        <button type="button" class="btn btn-primary">SIGN UP</button>
+        <button type="button" class="btn btn-primary" (click)="commit()">SIGN UP</button>
 
         <span class="redirect-text">Have an account? <a [routerLink]="['/', 'auth','signin']">SIGN IN</a></span>
     </form>
