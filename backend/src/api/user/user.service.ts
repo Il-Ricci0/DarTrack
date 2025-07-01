@@ -1,5 +1,4 @@
 import { UserIdentityModel } from "../../lib/auth/local/user-identity.model";
-import { UserRole } from "../utils/enum/user.role";
 import { User } from "./user.entity";
 import { UserModel } from "./user.model";
 import * as bcrypt from 'bcrypt';
@@ -11,7 +10,7 @@ export class UserExistsError extends Error {
     constructor() {
         super();
         this.name = 'UserExists';
-        this.message = 'Username già in uso.';
+        this.message = 'Username already in use.';
     }
 }
 
@@ -19,7 +18,7 @@ export class EmailExistsError extends Error {
     constructor() {
         super();
         this.name = 'EmailExists';
-        this.message = 'Email già in uso.';
+        this.message = 'Email already in use.';
     }
 }
 
@@ -27,7 +26,7 @@ export class MissingCredentialsError extends Error {
     constructor() {
         super();
         this.name = 'MissingCredentials';
-        this.message = 'Username e Password sono obbligatori.';
+        this.message = 'Username and password are required.';
     }
 }
 

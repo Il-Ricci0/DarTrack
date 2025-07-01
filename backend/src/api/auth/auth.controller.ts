@@ -33,7 +33,6 @@ export const register = async (
         else {
             next(err);
         }
-        next(err);
     }
 }
 

@@ -33,7 +33,7 @@ export class TokenService {
         }
         else {
             updated = await UserIdentityModel.findOneAndUpdate(
-                { user: userId },
+                { user: userId, refreshToken: oldToken },
                 { $set: { 'refreshToken.$': token } },
                 { new: true }
             );
