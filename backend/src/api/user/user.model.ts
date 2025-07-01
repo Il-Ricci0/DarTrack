@@ -1,6 +1,7 @@
 import { model, Schema } from "mongoose";
 import { User } from "./user.entity";
 import { UserRole } from "../utils/enum/user.role";
+import { UserRank } from "../utils/enum/user.rank";
 
 const userSchema = new Schema<User>({
     username: { type: String },
@@ -12,6 +13,10 @@ const userSchema = new Schema<User>({
         default: UserRole.PLAYER,
     },
     elo: { type: Number, default: 0 },
+    rank: { 
+        type: String,
+        enum: Object.values(UserRank),
+        default: undefined },
     active: { type: Boolean, default: false },
     verificationToken: { type: String },
     verificationTokenExpires: { type: Date },

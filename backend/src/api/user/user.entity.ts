@@ -7,6 +7,7 @@ export type User = {
     password: string;
     role: UserRole;
     elo: number;
+    rank: string;
     active: boolean;
     verificationToken?: string;
     verificationTokenExpires?: Date;
