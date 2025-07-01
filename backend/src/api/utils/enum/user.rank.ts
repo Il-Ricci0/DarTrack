@@ -1,42 +1,21 @@
 export enum UserRank {
     UnRanked = "UnRanked",
 
-    PlasticI = "PlasticI",
+    Plastic = "Plastic",
 
-    IronIV = "IronIV",
-    IronIII = "IronIII",
-    IronII = "IronII",
-    IronI = "IronI",
+    Iron = "Iron",
 
-    BronzeIV = "BronzeIV",
-    BronzeIII = "BronzeIII",
-    BronzeII = "BronzeII",
-    BronzeI = "BronzeI",
+    Bronze = "Bronze",
 
-    SilverIV = "SilverIV",
-    SilverIII = "SilverIII",
-    SilverII = "SilverII",
-    SilverI = "SilverI",
+    Silver = "Silver",
 
-    GoldIV = "GoldIV",
-    GoldIII = "GoldIII",
-    GoldII = "GoldII",
-    GoldI = "GoldI",
+    Gold = "Gold",
 
-    PlatinumIV = "PlatinumIV",
-    PlatinumIII = "PlatinumIII",
-    PlatinumII = "PlatinumII",
-    PlatinumI = "PlatinumI",
+    Platinum = "Platinum",
 
-    EmeraldIV = "EmeraldIV",
-    EmeraldIII = "EmeraldIII",
-    EmeraldII = "EmeraldII",
-    EmeraldI = "EmeraldI",
+    Emerald = "Emerald",
 
-    DiamondIV = "DiamondIV",
-    DiamondIII = "DiamondIII",
-    DiamondII = "DiamondII",
-    DiamondI = "DiamondI",
+    Diamond = "Diamond",
 
     Master = "Master",
     GrandMaster = "GrandMaster",
