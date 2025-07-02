@@ -3,6 +3,7 @@ import { CoreComponent } from './core/core.component';
 import { authRoutes } from './auth/auth.routes';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { matchRoutes } from './match/match.routes';
+import { leaderboardRoutes } from './leaderboard/leaderboard.routes';
 
 export const routes: Routes = [
   {
@@ -15,10 +16,11 @@ export const routes: Routes = [
     component: CoreComponent,
     children: [
       ...matchRoutes,
+      ...leaderboardRoutes,
       {
         path: 'dashboard',
-        component: DashboardComponent
-      }
+        component: DashboardComponent,
+      },
     ],
   },
   ...authRoutes,
