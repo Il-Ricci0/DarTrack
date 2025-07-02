@@ -1,0 +1,43 @@
+<div class="leaderboard-container">
+  <button class="btn btn-next">Next Game</button>
+  <div class="leaderboard-container__recap">
+    <h2>Game 3</h2>
+    <h1>90pts</h1>
+  </div>
+  <div class="leaderboard-container__players">
+    <avatar-selector [selected]="authService.user$()?.avatarId" />
+    <h3>{{ authService.user$()?.username }}</h3>
+    <h2>23pts</h2>
+    <img src="https://www.svgrepo.com/show/452215/gold-medal.svg" />
+  </div>
+  <div class="leaderboard-container__players">
+    <avatar-selector [selected]="authService.user$()?.avatarId" />
+    <h3>{{ authService.user$()?.username }}</h3>
+    <h2>20pts</h2>
+    <img src="https://www.svgrepo.com/show/422997/medal-silver-badge.svg" />
+  </div>
+  <div class="leaderboard-container__players">
+    <avatar-selector [selected]="authService.user$()?.avatarId" />
+    <h3>{{ authService.user$()?.username }}</h3>
+    <h2>16pts</h2>
+    <img src="https://www.svgrepo.com/show/422996/medal-bronze-prize.svg" />
+  </div>
+  <div class="leaderboard-container__recap">
+    <h2>Game 2</h2>
+    <h1>40pts</h1>
+  </div>
+  <div class="leaderboard-container__recap">
+    <h2>Game 1</h2>
+    <h1>100pts</h1>
+  </div>
+  <div class="leaderboard-container__you">
+    <avatar-selector [selected]="authService.user$()?.avatarId" />
+    <h2>23pts</h2>
+    <button>
+      <img src="https://www.svgrepo.com/show/522183/minus-circle.svg" />
+    </button>
+    <button>
+      <img src="https://www.svgrepo.com/show/522230/plus-circle.svg" />
+    </button>
+  </div>
+</div>
