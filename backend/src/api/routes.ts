@@ -13,6 +13,6 @@ router.use(authRouter);
 router.use('/jobs', cleanupRouter);
 router.use('/elo', eloRouter);
 router.use('/user', userRouter);
-router.use('/casualgame', casualGameRouter);
+router.use('/casual', casualGameRouter);
 
 export default router;

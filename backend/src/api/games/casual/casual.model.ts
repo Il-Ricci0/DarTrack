@@ -3,19 +3,25 @@ import { CasualGame } from "./casual.entity";
 import { GameStatus } from "../../utils/enum/game.status";
 
 const casualGameSchema = new Schema<CasualGame>({
-    players: { type: [String], required: true },
-    maxPlayers: { type: Number },
-    createdAt: { type: Date, default: new Date() },
-    status: { 
+    players: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }],
+    maxPlayers: { type: Number, required: true },
+    createdAt: { type: Date, default: new Date(), required: false },
+    status: {
         type: String,
         enum: Object.values(GameStatus),
-        default: GameStatus.Created
-     },
-    playerPoints: { 
+        default: GameStatus.Created,
+        required: false,
+    },
+    playerPoints: {
         type: Map,
         of: Number,
-        default: {}
-     },
+        default: {},
+        required: false,
+    },
 });
 
 casualGameSchema.set('toJSON', {
@@ -36,4 +42,4 @@ casualGameSchema.set('toObject', {
     }
 });
 
-export const UserModel = model<CasualGame>('CasualGame', casualGameSchema);
+export const CasualGameModel = model<CasualGame>('CasualGame', casualGameSchema);
