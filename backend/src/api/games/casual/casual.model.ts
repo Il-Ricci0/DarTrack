@@ -6,7 +6,7 @@ import { UserRole } from "../../utils/enum/user.role";
 const playerInfoSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     role: { type: String, enum: Object.values(UserRole), required: true },
-})
+});
 
 const casualGameSchema = new Schema<CasualGame>({
     players: {
