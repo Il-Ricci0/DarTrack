@@ -75,6 +75,12 @@ export class CasualGameService {
         const games = await CasualGameModel.find({ players: userId });
         return games;
     }
+
+    async gamesEnded(userId: string): Promise<CasualGame[]> {
+        const gamesCompleted = await CasualGameModel.find({ players: userId, status: GameStatus.Completed }).populate('players');
+
+        return gamesCompleted;
+    }
 }
 
 export default new CasualGameService();
