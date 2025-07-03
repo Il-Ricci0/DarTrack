@@ -22,6 +22,7 @@ const casualGameSchema = new Schema<CasualGame>({
         default: {},
         required: false,
     },
+    inviteCode: { type: String, required: true, unique: true }
 });
 
 casualGameSchema.set('toJSON', {

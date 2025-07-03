@@ -11,7 +11,7 @@ export const createCasualGame = async (
         const creatorId = req.user?.id;
 
         if (!creatorId) {
-            res.status(400).json({ message: 'Game creator information is missing or user is not authenticated.' })
+            res.status(401).json({ message: 'Game creator information is missing or user is not authenticated.' })
             return;
         }
 
@@ -42,7 +42,7 @@ export const getMyGames = async (
         const userId = req.user?.id;
 
         if (!userId) {
-            res.status(400).json({ message: 'User information is missing or user is not authenticated.' });
+            res.status(401).json({ message: 'User information is missing or user is not authenticated.' });
             return;
         }
 
@@ -73,7 +73,7 @@ export const myMatchHistory = async (
         const userId = req.user?.id;
 
         if (!userId) {
-            res.status(400).json({ message: 'User information is missing or user is not authenticated.' });
+            res.status(401).json({ message: 'User information is missing or user is not authenticated.' });
             return;
         }
 
@@ -90,6 +90,38 @@ export const myMatchHistory = async (
         }
 
         res.status(200).json(matchHistory);
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const joinGameViaCode = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { code } = req.body;
+        const userId = req.user?.id;
+
+        if (!userId) {
+            res.status(401).json({ message: 'User information is missing or user is not authenticated.' });
+            return;
+        }
+
+        if (!code || typeof code !== 'string') {
+            res.status(400).json({ message: 'Invite code is missing or invalid.' });
+            return;
+        }
+
+        const joinedGame = await CasualGameSrv.joinGame(code, userId!);
+
+        if (!joinedGame) {
+            res.status(500).json({ message: 'Failed to join the game. Please try again later.' });
+            return;
+        }
+
+        res.status(200).json({ message: 'Successfully joined the game.', game: joinedGame })
     } catch (err) {
         next(err);
     }

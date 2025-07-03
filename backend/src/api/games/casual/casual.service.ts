@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { User } from "../../user/user.entity";
 import { UserModel } from "../../user/user.model";
 import { GameStatus } from "../../utils/enum/game.status";
@@ -26,20 +27,28 @@ export class CasualGameService {
         if (!gameOptions.maxPlayers || gameOptions.maxPlayers > 8) {
             throw new MaxPlayersError();
         }
-        
+
         // Inserisco il creatore nella partita
         if (!gameOptions.players.includes(creatorUserId)) {
             gameOptions.players.push(creatorUserId);
         }
 
-        if (!gameOptions.players || gameOptions.players.length !== gameOptions.maxPlayers) {
+        if (!gameOptions.players) {
             throw new MissingPlayersError();
         }
 
+        // genero il codice invito
+        let code: string;
+        do {
+            code = nanoid(6);
+        } while (await CasualGameModel.findOne({ inviteCode: code }));
+
+        gameOptions.inviteCode = code;
+
         // Setto i playerPoints a 0 di default quando creao il game
-        gameOptions.playerPoints = {};
+        gameOptions.playerPoints = new Map();
         gameOptions.players.forEach(playerId => {
-            gameOptions.playerPoints[playerId] = 0;
+            gameOptions.playerPoints.set(playerId, 0);
         });
 
         // Setto lo status della partita a CREATED
@@ -80,6 +89,37 @@ export class CasualGameService {
         const gamesCompleted = await CasualGameModel.find({ players: userId, status: GameStatus.Completed }).populate('players');
 
         return gamesCompleted;
+    }
+
+    async joinGame(code: string, userId: string): Promise<CasualGame> {
+        const game = await CasualGameModel.findOne({ inviteCode: code });
+
+        if (!game) {
+            throw new Error('Game with this invite code does not exist.');
+        }
+
+        if (game.status !== GameStatus.Created) {
+            throw new Error('Cannot join a game that is not in CREATED state.');
+        }
+
+        if (game.players.includes(userId)) {
+            throw new Error('You are already a participant in this game.');
+        }
+
+        if (game.players.length >= game.maxPlayers!) {
+            throw new Error('The game has already reached the maximum number of players.');
+        }
+
+        // Aggiungo l'utente
+        game.players.push(userId);
+        game.playerPoints.set(userId, 0);
+
+        await game.save();
+
+        // restituisco con i player popolati
+        const updatedGame = await CasualGameModel.findById(game._id).populate('players').exec();
+
+        return updatedGame!;
     }
 }
 

@@ -6,5 +6,6 @@ export type CasualGame = {
     maxPlayers?: number;
     createdAt: Date;
     status: GameStatus;
-    playerPoints: { [playerId: string]: number };
+    playerPoints: Map<string, number>;
+    inviteCode: string;
 }
