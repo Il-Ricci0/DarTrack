@@ -1,6 +1,9 @@
-import { IsEmail, IsString, IsStrongPassword } from 'class-validator';
+import { IsEmail, IsNumber, IsString, IsStrongPassword } from 'class-validator';
 
 export class AddUserDTO {
+    @IsNumber()
+    avatarId!: number;
+
     @IsString()
     username!: string;
 
