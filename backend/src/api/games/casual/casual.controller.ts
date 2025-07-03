@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import CasualGameSrv from './casual.service';
+import CasualGameSrv, { isPlayerHost } from './casual.service';
+import { CasualGameModel } from "./casual.model";
 
 export const createCasualGame = async (
     req: Request,
@@ -122,6 +123,45 @@ export const joinGameViaCode = async (
         }
 
         res.status(200).json({ message: 'Successfully joined the game.', game: joinedGame })
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const startTheGame = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const gameId = req.params.gameId;
+        const user = req.user;
+
+        if (!gameId) {
+            res.status(400).json({ message: 'Game ID is missing in the URL.' });
+            return;
+        }
+
+        if (!user || !user.id) {
+            res.status(401).json({ message: 'User not authenticated.' });
+            return;
+        }
+
+        const game = await CasualGameModel.findById(gameId).populate('players.userId').exec();
+
+        if (!game) {
+            res.status(404).json({ message: `Game with ID ${gameId} not found.` });
+            return;
+        }
+
+        if (!isPlayerHost(game, user.id)) {
+            res.status(403).json({ message: 'Only the host can start the game.' });
+            return;
+        }
+
+        const updatedGame = await CasualGameSrv.startGame(gameId);
+
+        res.status(200).json(updatedGame);
     } catch (err) {
         next(err);
     }

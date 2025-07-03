@@ -134,4 +134,23 @@ export class CasualGameService {
     }
 }
 
+export function isPlayerHost(game: CasualGame, userId: string): boolean {
+    return game.players.some(player => {
+        const user = player.userId as { _id?: any } | string;
+
+        // Controllo se è un oggetto (popolato)
+        if (typeof user === 'object' && user !== null && '_id' in user) {
+            // user._id potrebbe essere ObjectId, quindi converto in stringa
+            return (user as { _id: any })._id.toString() === userId && player.role === UserRole.HOST;
+        }
+
+        // Se è stringa (id semplice)
+        if (typeof user === 'string') {
+            return user === userId && player.role === UserRole.HOST;
+        }
+
+        return false;
+    });
+}
+
 export default new CasualGameService();
