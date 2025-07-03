@@ -1,0 +1,63 @@
+@use "../../styles/palette";
+
+.leaderboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+
+  &__recap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background: palette.$c-casual;
+    color: palette.$c-text-casual;
+    box-shadow: 0 4px 0 palette.$c-casual-darker;
+    margin-top: 2rem;
+    padding: 16px 56px;
+    border-radius: 16px;
+  }
+
+  &__players {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background: lightgray;
+    color: lightgrey;
+    box-shadow: 0 4px 0 lightgray;
+    margin-top: 2rem;
+    padding: 8px;
+    border-radius: 16px;
+    img {
+      max-width: 50px;
+    }
+  }
+
+  &__you {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    background: palette.$c-casual;
+    color: palette.$c-text-casual;
+    box-shadow: 0 4px 0 palette.$c-casual-darker;
+    margin-top: 2rem;
+    margin-bottom: 24px;
+    padding: 16px 56px;
+    border-radius: 16px;
+    img {
+      max-width: 35px;
+    }
+
+    button {
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      background-color: #eadeff;
+      box-shadow: 0 4px 0 #715c96;
+    }
+  }
+}

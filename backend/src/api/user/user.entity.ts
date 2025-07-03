@@ -2,6 +2,7 @@ import { UserRole } from '../utils/enum/user.role';
 
 export type User = {
     id?: string;
+    avatarId: number;
     username: string;
     email: string;
     password: string;

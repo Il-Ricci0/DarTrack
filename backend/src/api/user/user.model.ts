@@ -4,6 +4,7 @@ import { UserRole } from "../utils/enum/user.role";
 import { UserRank } from "../utils/enum/user.rank";
 
 const userSchema = new Schema<User>({
+    avatarId: { type: Number },
     username: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String },
