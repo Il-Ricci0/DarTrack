@@ -4,6 +4,7 @@ import authRouter from './auth/auth.router';
 import cleanupRouter from './jobs/cleanup.router';
 import eloRouter from './elo/elo.router';
 import userRouter from './user/user.router';
+import casualGameRouter from './games/casual/casual.router';
 
 const router = Router();
 
@@ -12,5 +13,6 @@ router.use(authRouter);
 router.use('/jobs', cleanupRouter);
 router.use('/elo', eloRouter);
 router.use('/user', userRouter);
+router.use('/casualgame', casualGameRouter);
 
 export default router;
