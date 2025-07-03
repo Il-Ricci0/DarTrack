@@ -1,6 +1,4 @@
 import { nanoid } from "nanoid";
-import { User } from "../../user/user.entity";
-import { UserModel } from "../../user/user.model";
 import { GameStatus } from "../../utils/enum/game.status";
 import { UserRole } from "../../utils/enum/user.role";
 import { CasualGame } from "./casual.entity";
