@@ -23,6 +23,7 @@ export class MaxPlayersError extends Error {
 }
 
 export class CasualGameService {
+    // funzione create casual game
     async create(gameOptions: CasualGame, creatorUserId: string): Promise<CasualGame> {
         if (!gameOptions.maxPlayers || gameOptions.maxPlayers > 8) {
             throw new MaxPlayersError();
@@ -68,6 +69,7 @@ export class CasualGameService {
         return newGame!;
     }
 
+    // funzione per dare il ruolo di host al creatore del game
     async giveHost(userId: string): Promise<User> {
         const user = await UserModel.findById(userId);
         if (!user) {
@@ -80,8 +82,9 @@ export class CasualGameService {
         return user;
     }
 
+    // funzione che restituisce la lista di game a cui un giocatore fa parte (solo quelli creati o startati)
     async gameList(userId: string): Promise<CasualGame[]> {
-        const games = await CasualGameModel.find({ players: userId });
+        const games = await CasualGameModel.find({ players: userId, status: { $in: [GameStatus.Created, GameStatus.Started ]} }).populate('players');
         return games;
     }
 
