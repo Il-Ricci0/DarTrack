@@ -66,7 +66,7 @@ export class CasualGameService {
 
     // funzione che restituisce la lista di game a cui un giocatore fa parte (solo quelli creati o startati)
     async gameList(userId: string): Promise<CasualGame[]> {
-        const games = await CasualGameModel.find({ "players.userId": userId, status: { $in: [GameStatus.Created, GameStatus.Started ]} }).populate({ path: 'players.userId', select: "-role" });
+        const games = await CasualGameModel.find({ "players.userId": userId, status: { $in: [GameStatus.Created, GameStatus.Started] } }).populate({ path: 'players.userId', select: "-role" });
         return games;
     }
 
@@ -107,6 +107,30 @@ export class CasualGameService {
         const updatedGame = await CasualGameModel.findById(game._id).populate({ path: 'players.userId', select: "-role" }).exec();
 
         return updatedGame!;
+    }
+
+    async startGame(gameId: string): Promise<CasualGame> {
+        const game = await CasualGameModel.findById(gameId);
+
+        if (!game) {
+            throw new Error(`Game with ID ${gameId} not found.`);
+        }
+
+        game.status = GameStatus.Started;
+
+        try {
+            await game.save();
+        } catch (saveError) {
+            throw new Error(`Failed to save game status update for game ID ${gameId}`);
+        }
+
+        const updatedGame = await CasualGameModel.findById(gameId).populate({ path: 'players.userId', select: '-role' }).exec();
+
+        if (!updatedGame) {
+            throw new Error(`Failed to retrieve updated game data after starting game ID ${gameId}.`)
+        }
+
+        return updatedGame;
     }
 }
 
