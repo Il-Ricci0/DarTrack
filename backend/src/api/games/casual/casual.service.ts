@@ -30,8 +30,8 @@ export class CasualGameService {
         }
 
         // Inserisco il creatore nella partita
-        if (!gameOptions.players.includes(creatorUserId)) {
-            gameOptions.players.push(creatorUserId);
+        if (!gameOptions.players.some(playerInfo => playerInfo.userId.toString() === creatorUserId)) {
+            gameOptions.players.push({ userId: creatorUserId, role: UserRole.HOST });
         }
 
         if (!gameOptions.players) {
@@ -48,8 +48,8 @@ export class CasualGameService {
 
         // Setto i playerPoints a 0 di default quando creao il game
         gameOptions.playerPoints = new Map();
-        gameOptions.players.forEach(playerId => {
-            gameOptions.playerPoints.set(playerId, 0);
+        gameOptions.players.forEach(playerInfo => {
+            gameOptions.playerPoints.set(playerInfo.userId.toString(), 0);
         });
 
         // Setto lo status della partita a CREATED
@@ -61,39 +61,25 @@ export class CasualGameService {
         // Salvataggio su MongoDB
         const newGameDoc = await CasualGameModel.create(gameOptions);
 
-        // Do il ruolo HOST al creatore
-        await this.giveHost(creatorUserId);
-
         // Recupero il game popolato
-        const newGame = await CasualGameModel.findById(newGameDoc._id).populate('players').exec();
+        const newGame = await CasualGameModel.findById(newGameDoc._id).populate({ path: 'players.userId', select: "-role" }).exec();
         return newGame!;
-    }
-
-    // funzione per dare il ruolo di host al creatore del game
-    async giveHost(userId: string): Promise<User> {
-        const user = await UserModel.findById(userId);
-        if (!user) {
-            throw new Error(`User with id ${userId} not found`);
-        }
-
-        user.role = UserRole.HOST;
-        await user.save(); // salvo la modifica del ruolo
-
-        return user;
     }
 
     // funzione che restituisce la lista di game a cui un giocatore fa parte (solo quelli creati o startati)
     async gameList(userId: string): Promise<CasualGame[]> {
-        const games = await CasualGameModel.find({ players: userId, status: { $in: [GameStatus.Created, GameStatus.Started ]} }).populate('players');
+        const games = await CasualGameModel.find({ "players.userId": userId, status: { $in: [GameStatus.Created, GameStatus.Started ]} }).populate({ path: 'players.userId', select: "-role" });
         return games;
     }
 
+    // funuzione che restituisce la match history di partite passate
     async gamesEnded(userId: string): Promise<CasualGame[]> {
-        const gamesCompleted = await CasualGameModel.find({ players: userId, status: GameStatus.Completed }).populate('players');
+        const gamesCompleted = await CasualGameModel.find({ "players.userId": userId, status: GameStatus.Completed }).populate({ path: 'players.userId', select: "-role" });
 
         return gamesCompleted;
     }
 
+    // funzione che fa joinare i player in una partita tramite codice
     async joinGame(code: string, userId: string): Promise<CasualGame> {
         const game = await CasualGameModel.findOne({ inviteCode: code });
 
@@ -105,7 +91,7 @@ export class CasualGameService {
             throw new Error('Cannot join a game that is not in CREATED state.');
         }
 
-        if (game.players.includes(userId)) {
+        if (game.players.some(playerInfo => playerInfo.userId.toString() === userId)) {
             throw new Error('You are already a participant in this game.');
         }
 
@@ -114,13 +100,13 @@ export class CasualGameService {
         }
 
         // Aggiungo l'utente
-        game.players.push(userId);
+        game.players.push({ userId, role: UserRole.PLAYER });
         game.playerPoints.set(userId, 0);
 
         await game.save();
 
         // restituisco con i player popolati
-        const updatedGame = await CasualGameModel.findById(game._id).populate('players').exec();
+        const updatedGame = await CasualGameModel.findById(game._id).populate({ path: 'players.userId', select: "-role" }).exec();
 
         return updatedGame!;
     }
